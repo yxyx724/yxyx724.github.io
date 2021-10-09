@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Chap2 Sierpinski Gasket </title>
+    <script id="vertex-shader-2d" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	void main(){
+		gl_Position = vPosition;
+	}
+	</script>
+
+    
+
+    <script id="fragment-shader-2d" type="x-shader/x-fragment">
+        precision mediump float;
+        void main(){
+            gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+        }
+	</script>
+
+    <script id="vertex-shader-3d" type="x-shader/x-vertex">
+        attribute vec3 vPosition;
+        attribute vec3 vColor;
+        varying vec4 color;
+        void main(){
+            gl_Position = vec4(vPosition, 1.0);
+            color = vec4(vColor, 1.0);
+        }
+    </script>
+    <script id="fragment-shader-3d" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 color;
+        void main(){
+            gl_FragColor = color;
+        }
+    </script>
+
+  
+    <script type="text/javascript" src="../js/common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../js/common/initShaders.js"></script>
+    <script type="text/javascript" src="../js/common/gl-matrix-min.js"></script>
+
+    <script type="text/javascript" src="../js/ch02/gasket-triangles.js"></script>
+</head>
+
+<body>   
+    <h2>Sierpinski Gasket in 2D</h2>
+    <canvas id="gl-canvas" width="512" height="512">你的浏览器不支持HTML5 canvas元素</canvas>
+    <h4>任务a. 要求在网页上添加交互式控件，输入剖分的层次(0-7)，绘制对应图案。(默认2d)</h4>
+    <!-- 层数控件（0~7，初始值为4）：<input type="range" id="sierNum" min= "0" max="7" value="4"/> -->
+    <form method="post" name="forml">
+        0:<input type="radio" name="sierNumb2d" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
+        1:<input type="radio" name="sierNumb2d" value="1" />&nbsp;&nbsp;&nbsp;&nbsp;
+        2:<input type="radio" name="sierNumb2d" value="2" />&nbsp;&nbsp;&nbsp;&nbsp;
+        3:<input type="radio" name="sierNumb2d" value="3" />&nbsp;&nbsp;&nbsp;&nbsp;
+        4:<input type="radio" name="sierNumb2d" value="4" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        5:<input type="radio" name="sierNumb2d" value="5" />&nbsp;&nbsp;&nbsp;&nbsp;
+        6:<input type="radio" name="sierNumb2d" value="6" />&nbsp;&nbsp;&nbsp;&nbsp;
+        7:<input type="radio" name="sierNumb2d" value="7" />&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" id="sierNum2d" onclick="choiceNum2d()" value="二维显示层数" >
+    </form>
+    <h4>任务b. 绘制三维效果的Sierpinski Gasket, 要求同任务a</h4>
+    <form method="post" name="forml">
+        0:<input type="radio" name="sierNumb3d" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
+        1:<input type="radio" name="sierNumb3d" value="1" />&nbsp;&nbsp;&nbsp;&nbsp;
+        2:<input type="radio" name="sierNumb3d" value="2" />&nbsp;&nbsp;&nbsp;&nbsp;
+        3:<input type="radio" name="sierNumb3d" value="3" />&nbsp;&nbsp;&nbsp;&nbsp;
+        4:<input type="radio" name="sierNumb3d" value="4" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        5:<input type="radio" name="sierNumb3d" value="5" />&nbsp;&nbsp;&nbsp;&nbsp;
+        6:<input type="radio" name="sierNumb3d" value="6" />&nbsp;&nbsp;&nbsp;&nbsp;
+        7:<input type="radio" name="sierNumb3d" value="7" />&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" id="sierNum3d" onclick="choiceNum3d()" value="三维显示层数" >
+    </form>
+	<h4>任务c. 完成不同层次剖分效果的绘制，此处绘制采用线框模式</h4>
+    <h4>任务d. 任务c中剖分后的三角形添加旋转效果。</h4>
+    <h4>任务e. 在任务d中，如果旋转角度根据点到原点的距离设定</h4>
+    <input type="button" id="init2d" onclick="choiceNumWire()" value="初始化" >
+    <form method="post" name="forml">
+        0:<input type="radio" name="wire" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
+        1:<input type="radio" name="wire" value="1" />&nbsp;&nbsp;&nbsp;&nbsp;
+        2:<input type="radio" name="wire" value="2" />&nbsp;&nbsp;&nbsp;&nbsp;
+        3:<input type="radio" name="wire" value="3" />&nbsp;&nbsp;&nbsp;&nbsp;
+        4:<input type="radio" name="wire" value="4" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        5:<input type="radio" name="wire" value="5" />&nbsp;&nbsp;&nbsp;&nbsp;
+        6:<input type="radio" name="wire" value="6" />&nbsp;&nbsp;&nbsp;&nbsp;
+        7:<input type="radio" name="wire" value="7" />&nbsp;&nbsp;&nbsp;&nbsp;
+        旋转不扭曲:<input type="radio" name="sideRotate2d"  value="false"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        旋转且扭曲:<input type="radio" name="sideRotate2d" value="true"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        <br></br>
+        旋转<input type="text" size="2" id="rotate" name="rotate" checked=0/>度
+        <!-- <input type="button" id="rotate2d" onclick="choiceNumrotate()" value="旋转显示层数" > -->
+        <input type="button" id="wire2d" onclick="choiceNumRotate()" value="二维显示层数" >
+    </form>   
+        
+
+
+    
+</body>
+
+</html>
+
+
+
+
+
+
