@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>将Lab0转换成动画</title>
+    <script id="rot-v-shader" type="x-shader/x-vertex">
+		attribute vec4 vPosition;
+		uniform float theta;
+		attribute vec4 vColor;
+		varying vec4 fColor;
+
+		void main()
+		{
+			float u = cos( theta );
+			float v = sin( theta );
+
+			gl_Position.x = vPosition.x * u - vPosition.y * v;
+			gl_Position.y = vPosition.x * v + vPosition.y * u;
+			gl_Position.z = 0.0;
+			gl_Position.w = 1.0;
+			fColor = vColor;
+		}
+	</script>
+
+    <script id="rot-f-shader" type="x-shader/x-fragment">
+		precision mediump float;
+		varying vec4 fColor;
+
+		void main()
+		{
+		
+			gl_FragColor = fColor;
+			
+		}
+	</script>
+
+	<style type="text/css">
+        #choice{
+            border: #196AA2 2px dashed;
+            float: right;
+            width: 40%;
+        }
+    </style>
+
+    <script type="text/javascript" src="../js/common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../js/common/initShaders.js"></script>
+    <script type="text/javascript" src="../js/common/gl-matrix-min.js"></script>
+
+	<script type="text/javascript" src="../js/ch03/pentagon.js"></script>
+	<!-- <script type="text/javascript" src="pentagon.js"></script> -->
+
+    <!-- <script type="text/javascript" src="../js/ch03/rotsquareslider.js"></script> -->
+</head>
+
+<body onload="initRotSquare()">
+    <h1>Lab_0------Control rotation using Menus</h1><br>
+    <canvas id="rot-canvas" width="550" height="550">你的浏览器不支持HTML5 canvas元素</canvas>
+    <!-- <fieldset> -->
+	<div id="choice">
+        <legend>转动控制</legend>
+		<button onclick="startRot();initRotSquare()">开始</button>
+	    <button onclick="stopRot();initRotSquare()">暂停</button>
+        <button id="direction" onclick="changeDir()">换个转动方向</button><br>
+        Speed 0<input type="range" id="speedcon" min="0" max="100" value="50" step="10"> 100
+    <!-- </fieldset> -->
+	</div>
+</body>
+
+</html>
